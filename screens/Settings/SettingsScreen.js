@@ -4,7 +4,7 @@
 import { StyleSheet, View,Text } from "react-native";
 
 function SettingsScreen() {
-    <View>
+   return  <View style={styles.container} >
         <Text>Saved Screen</Text>
     </View>
 }
@@ -15,6 +15,7 @@ export default SettingsScreen;
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        alignItems:'center'
+        justifyContent: "center",
+        alignItems: "center",
     }
 })
