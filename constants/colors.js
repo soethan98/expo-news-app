@@ -9,6 +9,7 @@ export const GlobalStyles ={
         darkGrey: '#666',
         lightGrey: '#999',
         softText: '#555',
+        textInputBackground:'#e4e4e4'
     }
   
 };
