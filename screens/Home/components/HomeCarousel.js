@@ -1,64 +1,101 @@
 
-import { Image, View, Dimensions, StyleSheet, Text } from "react-native";
+import { useEffect, useReducer } from "react";
+import { Image, View, Dimensions, StyleSheet, Text, ActivityIndicator } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
+import { getLatestNews } from "../../../services/api";
 
-
-const IMAGES = [
-  {
-    id: 1,
-    image_url: 'https://dam.mediacorp.sg/image/upload/s--NCJTmNpC--/fl_relative,g_south_east,l_mediacorp:cna:watermark:2021-08:cna,w_0.1/f_auto,q_auto/c_fill,g_auto,h_468,w_830/v1/mediacorp/cna/image/2025/05/02/dsc_8542.jpg?itok=ADSTEFqM'
-  },
-  {
-    id: 2,
-    image_url: 'https://www.indianagazette.com/leisure/dear-abby-wife-values-gambling-over-her-10-year-marriage/article_6b01f06b-7921-478f-9be8-f4424a74bc30.html'
-  },
-  {
-    id: 3,
-    image_url: 'https://www.enca.com/sites/default/files/styles/large/public/2024-04/WhatsApp%20Image%202024-04-03%20at%2005.40.09.jpeg.webp?itok=29ZjxJwS'
-  },
-  {
-    id: 4,
-    image_url: 'https://media.assettype.com/sentinelassam-english%2F2025-05-05%2Fypsrd2ru%2FANI-20250504171639.jpg?auto=format%2Ccompress&fit=max&w=480'
-  },
-  {
-    id: 1,
-    image_url: 'https://media.assettype.com/freepressjournal/2025-05-05/l2wvkbzf/GujratBoardResult2025.jpg'
-  }
-]
 
 const { width: screenWidth } = Dimensions.get('window')
 
-
 const HomeCarousel = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+
+  useEffect(() => {
+    const loadingBreakingNews = async () => {
+      dispatch({ type: 'FETCH_START' });
+      try {
+        const news = await getLatestNews();
+        dispatch({ type: 'FETCH_SUCCESS', payload: news });
+      } catch (error) {
+        dispatch({ type: 'FETCH_ERROR', payload: error.message });
+      }
+    };
+    loadingBreakingNews();
+  }, []);
+
+
+  const renderItem = ({ item }) =>
+  (<View style={styles.imageContainer}>
+    <Image
+      resizeMode="cover"
+      source={{ uri: item.imageUrl }}
+      style={styles.image}
+    />
+    <View style={styles.titleContainer}>
+      <Text style={styles.newsTitle}>{item.title}</Text>
+
+    </View>
+  </View>
+  )
+
+  const renderLoading = () => (
+    <View style={styles.placeholderContainer}>
+      <ActivityIndicator size="large" />
+    </View>
+  );
+
+  const renderError = () => (
+    <View style={styles.placeholderContainer}>
+      <Text style={styles.errorText}>Error: {state.error}</Text>
+    </View>
+  );
+
+
+
+
+
   return <View style={styles.container}>
     <Text style={styles.header}>Breaking News</Text>
-    <Carousel autoPlayInterval={2000}
-      data={IMAGES}
-      height={250}
-      loop={true}
-      width={screenWidth}
-      mode="parallax"
-      modeConfig={{
-        parallaxScrollingScale: 0.9,
-        parallaxScrollingOffset: 50,
-      }}
-      renderItem={({ item }) => (
-        <View style={styles.imageContainer}>
-          <Image
-            resizeMode="cover"
-            source={{ uri: item.image_url }}
-            style={styles.image}
-          />
-          <View style={styles.titleContainer}>
-            <Text style={styles.newsTitle}>This is news Title</Text>
+    {
+      state.loading ? renderLoading() : state.error ?
+        renderError() :
+        <Carousel autoPlayInterval={2000}
+          data={state.breakingNews}
+          height={250}
+          loop={true}
+          width={screenWidth}
+          mode="parallax"
+          modeConfig={{
+            parallaxScrollingScale: 0.9,
+            parallaxScrollingOffset: 50,
+          }}
+          renderItem={renderItem} />
+    }
 
-          </View>
-        </View>
-
-      )} />
   </View>
 }
 
+
+const initialState = {
+  breakingNews: [],
+  loading: false,
+  error: null,
+};
+
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_START':
+      return { ...state, loading: true, error: null };
+    case 'FETCH_SUCCESS':
+      return { ...state, loading: false, breakingNews: action.payload };
+    case 'FETCH_ERROR':
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 const styles = StyleSheet.create({
 
   header: {
@@ -75,7 +112,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
     position: 'relative',
-    overflow:'hidden',
+    overflow: 'hidden',
     borderRadius: 12
 
   },
@@ -84,7 +121,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     position: 'absolute',
-    bottom:0,
+    bottom: 0,
     left: 0,
     right: 0,
     padding: 16,
@@ -97,6 +134,17 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0,0,0,0.75)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
+  },
+  placeholderContainer: {
+    height: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 8,
+  },
+  errorText: {
+    color: 'red',
+    textAlign: 'center',
   },
 })
 

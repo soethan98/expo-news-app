@@ -13,9 +13,11 @@ const api = axios.create({
 
 
 
+
 export async function getLatestNews() {
     try {
         const response = await api.get(`/api/1/latest?apikey=${API_KEY}&language=en`);
+        console.log(response)
         const latestNews = response.data.results.map((resItem) => ({
             articleId: resItem.article_id,
             title: resItem.title,
@@ -28,6 +30,7 @@ export async function getLatestNews() {
         return latestNews;
 
     } catch (error) {
+
         throw error;
     }
 }
