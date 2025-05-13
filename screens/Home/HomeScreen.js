@@ -6,23 +6,20 @@ import HomeCarousel from "./components/HomeCarousel";
 import { useState } from "react";
 import { getLatestNews } from "../../services/api";
 import { useEffect } from "react";
+import Categories from "./components/Categories";
 
 function HomeScreen() {
     const { top } = useSafeAreaInsets()
-    const [breakingNews, setBreakingNews] = useState([]);
 
 
-    useEffect(() => {
-        let response = getLatestNews()
-        setBreakingNews(response)
-    }, [])
 
     return <View style={[{ paddingTop: top }, styles.container]}>
         <HomeHeader />
         <HomeSearchBar />
         
-          <HomeCarousel latestNews={breakingNews} />
-
+          <HomeCarousel />
+          
+    <Categories/>
         
     </View>
 }
