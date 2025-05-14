@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text,ScrollView } from "react-native";
 import HomeHeader from "./components/HomeHeader";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import HomeSearchBar from "../../components/HomeSearchBar";
@@ -14,16 +14,17 @@ function HomeScreen() {
 
 
 
-    return <View style={[{ paddingTop: top }, styles.container]}>
-        <HomeHeader />
-        <HomeSearchBar />
-        
-          <HomeCarousel />
-          
-    <Categories/>
-    <NewsList />
-        
-    </View>
+    return <ScrollView style={[{ paddingTop: top }, styles.container]}>
+            <HomeHeader />
+            <HomeSearchBar />
+
+            <HomeCarousel />
+
+            <Categories />
+            <NewsList />
+
+
+    </ScrollView>
 }
 
 export default HomeScreen;

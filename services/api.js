@@ -29,6 +29,9 @@ export async function getLatestNews() {
             link: resItem.link,
             descriptions: resItem.description,
             imageUrl: resItem.image_url,
+            category:resItem.category[0],
+            source:resItem.source_id,
+            sourceIcon:resItem.source_icon
         }))
 
 
