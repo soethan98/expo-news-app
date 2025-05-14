@@ -7,6 +7,7 @@ import { useState } from "react";
 import { getLatestNews } from "../../services/api";
 import { useEffect } from "react";
 import Categories from "./components/Categories";
+import NewsList from "./components/NewsList";
 
 function HomeScreen() {
     const { top } = useSafeAreaInsets()
@@ -20,6 +21,7 @@ function HomeScreen() {
           <HomeCarousel />
           
     <Categories/>
+    <NewsList />
         
     </View>
 }
