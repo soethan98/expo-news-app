@@ -1,21 +1,19 @@
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from "react-native";
 import newCategoryList from "../../../constants/categories";
 import { GlobalStyles } from "../../../constants/colors";
-import { useState } from "react";
-const Categories = () => {
-    const [selectedCategory, setSelectedCategory] = useState(null)
+
+
+const Categories = ({ onCategoryChange,selectedCategory }) => {
     return (<View>
         <Text style={styles.title}>Trending Right Now</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.itemsWrapper}>
             {newCategoryList.map((category) => (
                 <TouchableOpacity key={category.id} style={[
-                    styles.chip , selectedCategory === category.id && styles.chipSelected,
-                ]} onPress={() => {
-                    setSelectedCategory(category.id)
-                }}>
+                    styles.chip, selectedCategory.id === category.id && styles.chipSelected,
+                ]} onPress={() => onCategoryChange(category)}>
                     <Text style={[
                         styles.chipText,
-                        selectedCategory === category.id && styles.chipTextSelected
+                        selectedCategory.id === category.id && styles.chipTextSelected
                     ]}>{category.title}</Text>
                 </TouchableOpacity>
             ))}
@@ -47,8 +45,8 @@ const styles = StyleSheet.create({
     },
     chipSelected: {
 
-        backgroundColor:GlobalStyles.colors.tabIconSelected,
-        borderColor:GlobalStyles.colors.tabIconSelected,
+        backgroundColor: GlobalStyles.colors.tabIconSelected,
+        borderColor: GlobalStyles.colors.tabIconSelected,
     },
     chipText: {
         fontSize: 14,
@@ -56,7 +54,7 @@ const styles = StyleSheet.create({
         color: GlobalStyles.colors.darkGrey
     },
     chipTextSelected: {
-        color:GlobalStyles.colors.white,
-        
+        color: GlobalStyles.colors.white,
+
     }
 })

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text,ScrollView } from "react-native";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 import HomeHeader from "./components/HomeHeader";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import HomeSearchBar from "../../components/HomeSearchBar";
@@ -11,17 +11,29 @@ import NewsList from "./components/NewsList";
 
 function HomeScreen() {
     const { top } = useSafeAreaInsets()
+    const [selectedCategory, setSelectedCategory] = useState({
+        id: 1,
+        title: 'All',
+        slug: 'top',
+        selected: false,
+    })
+
 
 
 
     return <ScrollView style={[{ paddingTop: top }, styles.container]}>
-            <HomeHeader />
-            <HomeSearchBar />
+        <HomeHeader />
+        <HomeSearchBar />
 
-            <HomeCarousel />
+        <HomeCarousel />
 
-            <Categories />
-            <NewsList />
+        <Categories
+            onCategoryChange={
+                setSelectedCategory
+            }
+            selectedCategory={selectedCategory}
+        />
+        <NewsList category={selectedCategory} />
 
 
     </ScrollView>

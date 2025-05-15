@@ -14,15 +14,14 @@ const api = axios.create({
 
 
 
-export async function getLatestNews() {
+export async function getLatestNews(category='top') {
     try {
-        // const response = await api.get(`/api/1/latest?apikey=${API_KEY}&language=en`);
+        // const response = await api.get(`/api/1/latest?apikey=${API_KEY}&language=en&category=${category}&removeduplicate=1`);
         const response = await new Promise((resolve) =>{
             setTimeout(() => {
                 resolve({data:mockNews})
             }, 1500);
         });
-        console.log(response)
         const latestNews = response.data.results.map((resItem) => ({
             articleId: resItem.article_id,
             title: resItem.title,

@@ -10,7 +10,8 @@ const NewsList = ({ category }) => {
         const loadingLatestNews = async () => {
             dispatch({ type: 'FETCH_START' });
             try {
-                const news = await getLatestNews();
+                const news = await getLatestNews(category.slug);
+                console.log('this is news')
                 dispatch({ type: 'FETCH_SUCCESS', payload: news });
             } catch (error) {
                 dispatch({ type: 'FETCH_ERROR', payload: error.message });
@@ -18,7 +19,7 @@ const NewsList = ({ category }) => {
         };
         loadingLatestNews();
 
-    }, [])
+    }, [category])
 
     return (
         <View style={styles.container}>

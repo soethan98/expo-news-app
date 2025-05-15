@@ -2,7 +2,7 @@ const newCategoryList = [
     {
         id: 1,
         title: 'All',
-        slug: '',
+        slug: 'top',
         selected: false,
       },
       {
