@@ -1,13 +1,13 @@
 
 import { useEffect, useReducer } from "react";
-import { Image, View, Dimensions, StyleSheet, Text, ActivityIndicator } from "react-native";
+import { Image, View, Dimensions, StyleSheet, Text, ActivityIndicator, TouchableOpacity } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import { getLatestNews } from "../../../services/api";
 
 
 const { width: screenWidth } = Dimensions.get('window')
 
-const HomeCarousel = () => {
+const HomeCarousel = ({onNewsItemClick}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
 
@@ -26,7 +26,8 @@ const HomeCarousel = () => {
 
 
   const renderItem = ({ item }) =>
-  (<View style={styles.imageContainer}>
+  (
+  <TouchableOpacity style={styles.imageContainer} onPress={() => onNewsItemClick(item.articleId)}>
     <Image
       resizeMode="cover"
       source={{ uri: item.imageUrl }}
@@ -36,7 +37,7 @@ const HomeCarousel = () => {
       <Text style={styles.newsTitle}>{item.title}</Text>
 
     </View>
-  </View>
+  </TouchableOpacity>
   )
 
   const renderLoading = () => (

@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import Categories from "./components/Categories";
 import NewsList from "./components/NewsList";
 
-function HomeScreen() {
+function HomeScreen({navigation}) {
     const { top } = useSafeAreaInsets()
     const [selectedCategory, setSelectedCategory] = useState({
         id: 1,
@@ -25,7 +25,7 @@ function HomeScreen() {
         <HomeHeader />
         <HomeSearchBar />
 
-        <HomeCarousel />
+        <HomeCarousel onNewsItemClick={(id) => navigation.navigate('Detail',{articleId:id})}/>
 
         <Categories
             onCategoryChange={

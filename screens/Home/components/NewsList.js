@@ -2,6 +2,7 @@ import { StyleSheet, View, Image, Text, ActivityIndicator, FlatList } from "reac
 import { GlobalStyles } from "../../../constants/colors";
 import { useReducer, useEffect } from "react";
 import { getLatestNews } from "../../../services/api";
+import NewsSource from "../../../components/NewsSource";
 
 const NewsList = ({ category }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -32,10 +33,7 @@ const NewsList = ({ category }) => {
                             <View style={styles.itemInfo}>
                                 <Text style={styles.itemCategory}>{item.category}</Text>
                                 <Text style={styles.itemTitle}>{item.title}</Text>
-                                <View style={styles.itemSourceInfo}>
-                                    <Image source={{ uri: item.sourceIcon }} style={styles.itemSourceImg} />
-                                    <Text style={styles.itemSourceName}>{item.source}</Text>
-                                </View>
+                                <NewsSource sourceIcon={item.sourceIcon} sourceName={item.source}/>
                             </View>
                         </View>
                     )
@@ -81,21 +79,21 @@ const styles = StyleSheet.create({
 
         fontWeight: '600',
     },
-    itemSourceInfo: {
-        flexDirection: 'row',
-        gap: 8,
-        alignItems: 'center'
-    },
-    itemSourceName: {
-        fontSize: 10,
-        fontWeight: '400',
-        color: GlobalStyles.colors.darkGrey
-    },
-    itemSourceImg: {
-        width: 20,
-        height: 20,
-        borderRadius: 10
-    }
+    // itemSourceInfo: {
+    //     flexDirection: 'row',
+    //     gap: 8,
+    //     alignItems: 'center'
+    // },
+    // itemSourceName: {
+    //     fontSize: 10,
+    //     fontWeight: '400',
+    //     color: GlobalStyles.colors.darkGrey
+    // },
+    // itemSourceImg: {
+    //     width: 20,
+    //     height: 20,
+    //     borderRadius: 10
+    // }
 })
 
 export default NewsList;
