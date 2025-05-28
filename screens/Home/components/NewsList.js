@@ -2,7 +2,7 @@ import { StyleSheet, View, Image, Text, ActivityIndicator, FlatList } from "reac
 import { GlobalStyles } from "../../../constants/colors";
 import { useReducer, useEffect } from "react";
 import { getLatestNews } from "../../../services/api";
-import NewsSource from "../../../components/NewsSource";
+import NewsItem from  "../../../components/NewsItem";
 
 const NewsList = ({ category }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -12,7 +12,6 @@ const NewsList = ({ category }) => {
             dispatch({ type: 'FETCH_START' });
             try {
                 const news = await getLatestNews(category.slug);
-                console.log('this is news')
                 dispatch({ type: 'FETCH_SUCCESS', payload: news });
             } catch (error) {
                 dispatch({ type: 'FETCH_ERROR', payload: error.message });
@@ -27,16 +26,7 @@ const NewsList = ({ category }) => {
             {state.loading ? (<ActivityIndicator size="large" />) :
 
                 (state.latestNews.map((item) => {
-                    return (
-                        <View style={styles.itemContainer} key={item.articleId}>
-                            <Image source={{ uri: item.imageUrl }} style={styles.itemImg} />
-                            <View style={styles.itemInfo}>
-                                <Text style={styles.itemCategory}>{item.category}</Text>
-                                <Text style={styles.itemTitle}>{item.title}</Text>
-                                <NewsSource sourceIcon={item.sourceIcon} sourceName={item.source}/>
-                            </View>
-                        </View>
-                    )
+                    return NewsItem(item);
                 }))
 
 
@@ -52,33 +42,8 @@ const styles = StyleSheet.create({
     container: {
         marginHorizontal: 20
     },
-    itemContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    itemImg: {
-        width: 90,
-        height: 100,
-        borderRadius: 20,
-        marginRight: 10
-    },
-    itemInfo: {
-        flex: 1,
-        gap: 10,
-        justifyContent: 'space-between'
-    },
-    itemCategory: {
-        fontSize: 12,
-        textTransform: 'capitalize',
-        color: GlobalStyles.colors.lightGrey
-    },
-    itemTitle: {
-        fontSize: 12,
-        color: GlobalStyles.colors.black,
-
-        fontWeight: '600',
-    },
+   
+    
     // itemSourceInfo: {
     //     flexDirection: 'row',
     //     gap: 8,

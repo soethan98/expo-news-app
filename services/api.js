@@ -3,6 +3,7 @@ import mockNews from '../assets/json/latest-news.json';
 import mockDetailNew from '../assets/json/detail-news.json'
 
 
+
 const BASE_URL = 'https://newsdata.io';
 const api = axios.create({
     baseURL: BASE_URL,
@@ -21,12 +22,7 @@ export async function getNewsById(id) {
                 resolve({ data: mockDetailNew })
             }, 1500);
         });
-
-
-
         const newsDetail = response.data.results[0];
-
-
         return {
             articleId: newsDetail.article_id,
             title: newsDetail.title,
@@ -46,12 +42,10 @@ export async function getNewsById(id) {
 export async function searchNews(filter) {
     const { category, country, query } = filter;
     try {
-        console.log(` searchresult ${category} -- ${country} -- ${query}`);
-
-        const response = await api.get(`/api/1/latest?apikey=${API_KEY}&language=en&image=1&removeduplicate=1&size=10&${category}${country}${query}`)
+        const response = await api.get(`/api/1/latest?apikey=${API_KEY}&language=en&image=1&removeduplicate=1&size=10&${category}${country}${query}`);
         const searchResult = response.data.results.map((resItem) => ({
             articleId: resItem.article_id,
-            articleId: resItem.title,
+            title: resItem.title,
             link: resItem.link,
             descriptions: resItem.description,
             imageUrl: resItem.image_url,
@@ -59,9 +53,6 @@ export async function searchNews(filter) {
             source: resItem.source_id,
             sourceIcon: resItem.source_icon
         }));
-
-        console.log(` searchresult ${searchResult[0].articleId}`);
-
 
         return searchResult;
     } catch (error) {
