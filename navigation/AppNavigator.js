@@ -6,6 +6,7 @@ import WelcomeScreen from '../screens/Welcome/WelcomeScreen';
 import DetailScreen from '../screens/Details/DetailScreen';
 import { Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import SearchNewsScreen from '../screens/SearchNews/SearchNewsScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -28,6 +29,9 @@ export default function AppNavigator() {
                 )
 
             })} />
+            <Stack.Screen name='SearchNewsScreen' component={SearchNewsScreen} options={{
+                headerBackButtonDisplayMode:'minimal'
+            }} />
         </Stack.Navigator>
     </NavigationContainer>);
 

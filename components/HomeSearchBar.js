@@ -3,7 +3,7 @@ import { GlobalStyles } from "../constants/colors";
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 
-function HomeSearchBar() {
+function HomeSearchBar({setSearchQuery}) {
 
     return (
     <View style={styles.searchContainer}>
@@ -11,7 +11,9 @@ function HomeSearchBar() {
         <TextInput placeholder="Search" style={styles.inputContainer}
          autoCapitalize="none" 
          inputMode="search"
-         onSubmitEditing={(value)=>{}}/>
+         onChangeText={(value)=>{
+            setSearchQuery(value);
+         }}/>
        
 
 
