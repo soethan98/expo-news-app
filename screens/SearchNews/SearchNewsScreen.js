@@ -59,7 +59,12 @@ function SearchNewsScreen({ navigation, route }) {
                     <FlatList
                         data={state.searchResult}
                         keyExtractor={(item) => item.articleId.toString()}
-                        renderItem={({ item }) => NewsItem(item)}
+                        renderItem={({ item }) => (
+                            <NewsItem
+                                data={item}
+                                onNewsItemClick={() => navigation.navigate('Detail', { articleId: item.articleId })}
+                            />
+                        )}
                     />
                 </View>
             )

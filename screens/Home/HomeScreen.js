@@ -33,7 +33,7 @@ function HomeScreen({navigation}) {
             }
             selectedCategory={selectedCategory}
         />
-        <NewsList category={selectedCategory} />
+        <NewsList category={selectedCategory} onNewsItemClick={(id) => navigation.navigate('Detail',{articleId:id})}  />
 
 
     </ScrollView>

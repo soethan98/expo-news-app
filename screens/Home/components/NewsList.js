@@ -4,7 +4,7 @@ import { useReducer, useEffect } from "react";
 import { getLatestNews } from "../../../services/api";
 import NewsItem from  "../../../components/NewsItem";
 
-const NewsList = ({ category }) => {
+const NewsList = ({ category,onNewsItemClick }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
@@ -26,7 +26,13 @@ const NewsList = ({ category }) => {
             {state.loading ? (<ActivityIndicator size="large" />) :
 
                 (state.latestNews.map((item) => {
-                    return NewsItem(item);
+                    return (
+                        <NewsItem
+                            key={item.articleId}
+                            data={item}
+                            onNewsItemClick={onNewsItemClick}
+                        />
+                    )
                 }))
 
 
