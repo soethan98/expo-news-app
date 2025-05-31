@@ -87,6 +87,37 @@ export async function getLatestNews(category = 'top') {
 
         throw error;
     }
+
+}
+
+
+export async function getFavoritesNews(ids) {
+    try {
+        // const response = await api.get(`/api/1/news?apikey=${API_KEY}&id=${ids}`);
+
+        const response = await new Promise((resolve) => {
+            setTimeout(() => {
+                resolve({ data: mockNews })
+            }, 1500);
+        });
+
+        const latestNews = response.data.results.map((resItem) => ({
+            articleId: resItem.article_id,
+            title: resItem.title,
+            link: resItem.link,
+            descriptions: resItem.description,
+            imageUrl: resItem.image_url,
+            category: resItem.category[0],
+            source: resItem.source_id,
+            sourceIcon: resItem.source_icon
+        }))
+
+
+        return latestNews;
+
+    } catch (error) {
+        throw error;
+    }
 }
 
 

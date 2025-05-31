@@ -40,9 +40,7 @@ function DetailScreen({ navigation, route }) {
         const loadNewsDetail = async () => {
             dispatch({ type: 'FETCH_START' })
             try {
-                console.log(`This is article id ${articleId}`)
                 const newsDetails = await getNewsById(articleId);
-                console.log(`News ${newsDetails.publishDate}`);
                 dispatch({ type: 'FETCH_SUCCESS', payload: newsDetails });
             } catch (error) {
                 console.log(error);

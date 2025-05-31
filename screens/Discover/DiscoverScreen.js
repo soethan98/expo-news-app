@@ -39,7 +39,6 @@ function DiscoverScreen({ navigation }) {
                 })}
             </View>
             <TouchableOpacity style={styles.searchBtn} onPress={() => {
-                console.log(`This is query ${searchQuery.toString()} -- ${category} ${country}`);
                 navigation.navigate("SearchNewsScreen", { keyword: searchQuery, category: category, country: country })
             }}>
                 <Text style={styles.searchBtnText}>Search</Text>
