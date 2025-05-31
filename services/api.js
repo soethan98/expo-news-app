@@ -13,8 +13,6 @@ const api = axios.create({
     }
 });
 
-
-
 export async function getNewsById(id) {
     try {
         const response = await new Promise((resolve) => {
