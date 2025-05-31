@@ -1,14 +1,40 @@
 import { View, Text, ActivityIndicator, StyleSheet, Image, ScrollView } from "react-native";
 import { getNewsById } from "../../services/api";
-import { useEffect, useReducer } from "react";
+import { use, useEffect, useLayoutEffect, useReducer } from "react";
 import NewsSource from "../../components/NewsSource";
 import { getFormatedDate } from "../../utils/date";
+import { FavoritesContext } from "../../store/FavoritesContext";
+import IconButton from "../../components/IconButton";
+import { useContext } from "react";
 
 
 function DetailScreen({ navigation, route }) {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const { articleId } = route.params;
+
+    const favoritesNewsCtx = useContext(FavoritesContext);
+    const isCurrentNewsFavorite = favoritesNewsCtx.isFavorite(articleId);
+
+
+    function changeFavoriteStatusHandler() {
+        if (isCurrentNewsFavorite) {
+            favoritesNewsCtx.removeFavorite(articleId);
+        }else{
+            favoritesNewsCtx.addFavorite(articleId);
+        }
+    }
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: ({tintColor}) => (
+                <IconButton icon={isCurrentNewsFavorite ? 'heart' : 'heart-outline'}
+                onPress={changeFavoriteStatusHandler} 
+                color={tintColor}/>
+            )
+        });
+    },[navigation, changeFavoriteStatusHandler]);    
+    
 
     useEffect(() => {
         const loadNewsDetail = async () => {

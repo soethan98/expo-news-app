@@ -21,16 +21,11 @@ export default function AppNavigator() {
             })} />
             <Stack.Screen name='Detail' component={DetailScreen} options={({ navigation }) => ({
                 headerBackButtonDisplayMode: 'minimal',
-                headerRight: ({ tintColor }) => (
-                    <Pressable>
-                        <Ionicons name="heart-outline" size={24} color={tintColor} />
 
-                    </Pressable>
-                )
 
             })} />
             <Stack.Screen name='SearchNewsScreen' component={SearchNewsScreen} options={{
-                headerBackButtonDisplayMode:'minimal'
+                headerBackButtonDisplayMode: 'minimal'
             }} />
         </Stack.Navigator>
     </NavigationContainer>);

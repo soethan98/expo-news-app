@@ -3,10 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import '@react-navigation/native-stack';
 import AppNavigator from './navigation/AppNavigator';
 import { useFonts } from 'expo-font';
+import FavoritesContextProvider from './store/FavoritesContext';
 
 export default function App() {
   return (
-    <AppNavigator />
+    <FavoritesContextProvider>
+          <AppNavigator />
+
+    </FavoritesContextProvider>
   );
 }
 
